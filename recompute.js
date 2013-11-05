@@ -3,6 +3,7 @@ var currentComputation = null;
 var nextId = 0;
 var toFlush = [];
 
+// Computes all required computations on next tick.
 var requireFlush = function() {
 	setTimeout(flush, 0);
 };
@@ -20,6 +21,7 @@ var contains = function(array, obj) {
 	}
 };
 
+// Keeps reference to a function.
 var Computation = function(f) {
 	this.id = nextId++;
 	this.onInvalidateCallbacks = [];
@@ -34,6 +36,7 @@ Computation.prototype.compute = function() {
 	currentComputation = null;
 };
 
+// Adds to flush list.
 Computation.prototype.invalidate = function() {
 	if (!contains(toFlush, this)) {
 		toFlush.push(this);
@@ -50,6 +53,7 @@ var Dependency = function() {
 	this.dependents = {};
 };
 
+// Adds current computation to list of dependants of this dependency.
 Dependency.prototype.depend = function() {
 	var self = this;
 
@@ -74,6 +78,7 @@ var Session = {
 	keyDeps: {}
 };
 
+// Make sure the current computation depends on this keys Dependency.
 Session.get = function(key) {
 	this.ensureDep(key);
 	this.keyDeps[key].depend();
@@ -86,6 +91,7 @@ Session.ensureDep = function(key) {
 	}
 };
 
+// Change value if required, and run dependency.changed() on keys dep.
 Session.set = function(key, value) {
 	var oldValue;
 	if (this.keys[key]) oldValue = this.keys[key];
