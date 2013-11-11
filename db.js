@@ -1,5 +1,5 @@
 // Interface for making db queries reactive.
-
+// TODO: store dep for each query.
 var ReactiveDb = function(collection) {
 	this.db = collection;
 	this.dep = new Dependency();
