@@ -7,11 +7,21 @@
         <p id="number"></p>
         <script src="recompute.js"></script>
         <script src="session.js"></script>
+        <script src="reactive.js"></script>
         <script>
             var element = document.getElementById('number');
+            var weather = new Reactive('rainy');
+
+            // session.js example.
             autorun(function() {
                 element.innerHTML = Session.get('number');
             });
+
+            // reactive.js example.
+            autorun(function() {
+                console.log('The weather is ' + weather.get());
+            });
+
             Session.set('number', 5);
         </script>
     </body>
