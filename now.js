@@ -20,6 +20,7 @@ Now.prototype.set = function(time) {
 };
 
 Now.prototype.updateInterval = function(interval) {
+	this.interval && clearInterval(this.interval);
 	this.interval = setInterval(function() {
 		this.set(new Date().toLocaleTimeString());
 	}.bind(this), interval);
