@@ -1,7 +1,7 @@
-
 var Now = function(interval) {
 	this.dep = new Dependency();
 	this.value = new Date().toLocaleTimeString();
+	// TODO: Constructor shouldn't do work.
 	this.start(interval);
 };
 
