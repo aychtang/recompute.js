@@ -67,7 +67,7 @@ Dependency.prototype.depend = function() {
 };
 
 Dependency.prototype.changed = function() {
-	for (dep in this.dependents) {
+	for (var dep in this.dependents) {
 		this.dependents[dep].invalidate();
 	}
 };
