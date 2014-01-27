@@ -45,8 +45,13 @@ Computation.prototype.compute = function() {
 	currentComputation = null;
 };
 
-// Adds the current computation to flush list.
-// Schedules a flush.
+
+// Upon invalidation, add the current computation to flush list.
+// Schedule a flush to be run which will force all invalid
+// Computations to recompute.
+
+// Also run any callbacks assigned to be handled
+// after invalidation.
 Computation.prototype.invalidate = function() {
 	if (!contains(toFlush, this)) {
 		toFlush.push(this);
