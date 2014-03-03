@@ -9,16 +9,16 @@ var requireFlush = function() {
 };
 
 var flush = function() {
-	for (var i = 0; i < toFlush.length; i++) {
-		toFlush[i].compute();
-	}
+	toFlush.forEach(function(fn) {
+		fn.compute();
+	});
 	toFlush = [];
 };
 
 var contains = function(array, obj) {
-	for (var i = 0; i < array.length; i++) {
-		if (array[i] === obj) return true;
-	}
+	array.some(function(e) {
+		return e === obj;
+	});
 };
 
 // Keeps reference to a function.
@@ -55,14 +55,12 @@ var Dependency = function() {
 
 // Adds current computation to list of dependants of this dependency.
 Dependency.prototype.depend = function() {
-	var self = this;
-
 	if (computation = currentComputation) {
 		computationId = computation.id;
 		this.dependents[computationId] = computation;
 		computation.onInvalidateCallbacks.push(function() {
-			delete self.dependents[computationId];
-		});
+			delete this.dependents[computationId];
+		}.bind(this));
 	}
 };
 
