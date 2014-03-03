@@ -1,7 +1,7 @@
-
 var Now = function(interval) {
 	this.dep = new Dependency();
 	this.value = new Date().toLocaleTimeString();
+	// TODO: Constructor shouldn't do work.
 	this.start(interval);
 };
 
@@ -20,6 +20,7 @@ Now.prototype.set = function(time) {
 };
 
 Now.prototype.updateInterval = function(interval) {
+	this.interval && clearInterval(this.interval);
 	this.interval = setInterval(function() {
 		this.set(new Date().toLocaleTimeString());
 	}.bind(this), interval);
